@@ -3,7 +3,6 @@ const xml2js = require('xml2js')
 const estimator = require('./estimator');
 const fs = require('fs');
 
-
 let startTime = null
 let endTime = null
 
