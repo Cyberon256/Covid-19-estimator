@@ -57,7 +57,7 @@ const covid19ImpactEstimator = (data) => {
     outPut.severeImpact.infectionsByRequestedTime * 0.15
   );
 
-  const totalHospitalBedsAvailable = 0.35 * totalHospitalBeds
+  const totalHospitalBedsAvailable = 0.35 * totalHospitalBeds;
   outPut.impact.hospitalBedsByRequestedTime = (
     Math.trunc(totalHospitalBedsAvailable - outPut.impact.severeCasesByRequestedTime)
   );
