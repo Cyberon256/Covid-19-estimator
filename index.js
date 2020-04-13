@@ -22,22 +22,36 @@ app.use((req, res, next) => {
       
       // Convert everything to milliseconds
       let actualTimeDiff = (timeDiff[0] * 1000) + (timeDiff[1] * 1e-6);
-      // Convert everything to seconds
-      // let actualTimeDiff = timeDiff[0] + (timeDiff[1] * 1e-9);
-
-      const timeStamp = (startTime[0] * 1e9) + startTime[1];
-      // const thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + 'done in ' + actualTimeDiff.toFixed(4) + ' seconds' + lineBreak;
-      const thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms' + lineBreak;
-      console.log(thisLog)
       
-      // Write to server.log
-      fs.appendFile('server.log', thisLog, (err) => {
+      const timeStamp = (startTime[0] * 1e9) + startTime[1];
+
+      fs.access('server.log', (err) => {
+        let thisLog;
+
         if (err) {
-          // return error
+          // console.log('Server.log does not exist!');
+          //Create the file
+          thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms';
+          fs.writeFile('server.log', thisLog, (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Success!');
+            }
+          });
         } else {
-          // return success
+          //console.log('Server.log exists!');
+          thisLog = lineBreak + timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms'; 
+          fs.appendFile('server.log',thisLog, (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Success!');
+            }
+          });
         }
-      });
+
+      });      
   }); 
 
   next();

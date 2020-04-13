@@ -19,14 +19,16 @@ router.post('/:type', (req, res) => {
       trim: true
     });
     myEstimate = builder.buildObject(myEstimate);
+    res.header('Content-Type', 'text/xml');
     res.status(200).send(myEstimate);
   } else {
+    // json
     res.status(200).send(myEstimate);
   }
 });
 
 router.get('/logs', (req, res) => {
-  // Read
+  // Read server.log
   fs.readFile('server.log', 'utf8', (err, file) => {
     if (err) {
       // show the error
