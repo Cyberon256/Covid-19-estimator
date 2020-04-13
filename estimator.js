@@ -59,10 +59,10 @@ const covid19ImpactEstimator = (data) => {
 
   const totalHospitalBedsAvailable = 0.35 * totalHospitalBeds
   outPut.impact.hospitalBedsByRequestedTime = (
-    Math.trunc(totalHospitalBedsAvailable - outPut.impact.severeCasesByRequestedTime);
+    Math.trunc(totalHospitalBedsAvailable - outPut.impact.severeCasesByRequestedTime)
   );
   outPut.severeImpact.hospitalBedsByRequestedTime = (
-    Math.trunc(totalHospitalBedsAvailable - outPut.severeImpact.severeCasesByRequestedTime);
+    Math.trunc(totalHospitalBedsAvailable - outPut.severeImpact.severeCasesByRequestedTime)
   );
 
   // Challenge 3
