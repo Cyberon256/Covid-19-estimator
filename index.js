@@ -19,12 +19,15 @@ app.use((req, res, next) => {
     let timeDiff = process.hrtime(startTime);
       
       // Convert everything to milliseconds
-      // let actualTimeDiff = (timeDiff[0] * 1000) + (timeDiff[1] * 1e-6);
+      let actualTimeDiff = (timeDiff[0] * 1000) + (timeDiff[1] * 1e-6);
       // Convert everything to seconds
-      let actualTimeDiff = timeDiff[0] + (timeDiff[1] * 1e-9);
+      // let actualTimeDiff = timeDiff[0] + (timeDiff[1] * 1e-9);
 
       const timeStamp = (startTime[0] * 1e9) + startTime[1];
-      const thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + 'done in ' + actualTimeDiff.toFixed(4) + ' seconds' + lineBreak;
+      // const thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + 'done in ' + actualTimeDiff.toFixed(4) + ' seconds' + lineBreak;
+      const thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms' + lineBreak;
+      console.log(thisLog)
+      
       // Write to server.log
       fs.appendFile('server.log', thisLog, (err) => {
         if (err) {
