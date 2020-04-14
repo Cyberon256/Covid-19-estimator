@@ -23,13 +23,18 @@ app.use((req, res, next) => {
       
       // Convert everything to milliseconds
       let actualTimeDiff = (timeDiff[0] * 1000) + (timeDiff[1] * 1e-6);
+
+      function numb(n) {
+        return n < 10 ? "0" + n.toFixed(0): "" + n.toFixed(0);
+      }
+      actualTimeDiff = numb(actualTimeDiff);
       
       // const timeStamp = (startTime[0] * 1e9) + startTime[1];
 
       fs.access('logs.txt', (err) => {
         if (err) {
           // console.log('logs.txt does not exist!');
-          const createLogs = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(0) + 'ms';
+          const createLogs = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff + 'ms';
           fs.writeFile('logs.txt', createLogs, (err) => {
             if (err) {
               console.log(err);
@@ -39,7 +44,7 @@ app.use((req, res, next) => {
           });
         } else {
           //console.log('Server.log exists!');
-          const addToLogs = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(0) + 'ms'; 
+          const addToLogs = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff + 'ms'; 
           fs.appendFile('logs.txt', addToLogs, (err) => {
           if (err) throw err;
           console.log('Saved!');
