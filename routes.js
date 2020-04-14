@@ -26,7 +26,7 @@ router.post('/:type', (req, res) => {
 
 router.get('/logs', (req, res) => {
   // Read server.log
-  fs.readFile('server.log', 'utf8', (err, file) => {
+  fs.readFile('logs.txt', 'utf8', (err, file) => {
     if (err) {
       // console.log(err)
     } else {

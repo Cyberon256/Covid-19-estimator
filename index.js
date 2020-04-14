@@ -18,7 +18,7 @@ app.get('/', (req, res) => res.status(204));  // Disable /
 app.use((req, res, next) => {
   const startTime = process.hrtime();
 
-  res.on('finish', () => {
+    res.on('finish', () => {
     let timeDiff = process.hrtime(startTime);
       
       // Convert everything to milliseconds
@@ -26,33 +26,27 @@ app.use((req, res, next) => {
       
       // const timeStamp = (startTime[0] * 1e9) + startTime[1];
 
-      fs.access('server.log', (err) => {
-        let thisLog;
-        
+      fs.access('logs.txt', (err) => {
         if (err) {
-          // console.log('Server.log does not exist!');
-          //Create the file
-          thisLog = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms';
-          fs.writeFile('server.log', thisLog, (err) => {
+          // console.log('logs.txt does not exist!');
+          const createLogs = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms';
+          fs.writeFile('logs.txt', createLogs, (err) => {
             if (err) {
               console.log(err);
             } else {
-              console.log('Success!');
+              //console.log('Success!');
             }
           });
         } else {
           //console.log('Server.log exists!');
-          thisLog = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms'; 
-          fs.appendFile('server.log',thisLog, (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('Success!');
-            }
-          });
+          const addToLogs = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms'; 
+          fs.appendFile('logs.txt', addToLogs, (err) => {
+          if (err) throw err;
+          console.log('Saved!');
+        });
         }
 
-      });      
+      });
   }); 
 
   next();
