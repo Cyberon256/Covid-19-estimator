@@ -31,7 +31,7 @@ router.get('/logs', (req, res) => {
       // show the error
     } else {
       // return contents of the file
-      res.type('text/plain');
+      res.type('text/plain;charset=UTF-8');
       res.status(200).send(file);
     }
   });
