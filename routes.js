@@ -9,28 +9,13 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:type', (req, res) => {   
-  if (req.params.type === 'xml') {
-    // req.header('Content-Type', 'text/xml');
-    // Convert the xml data to json
-    const parser = new xml2js.Parser;
-    let jsonFromXml;
-    let myXml = req.body;
-
-    myXml = myXml.toString().replace('\ufeff', '');
-    parser.parseString(myXml, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        jsonFromXml = result;
-      }
-    });  
-
-    // convert result back to xml
+  if (req.params.type === 'xml') {     
+    // convert estimator(req.body) to xml
     const builder = new xml2js.Builder({
       rootName: 'estimate',
       trim: true
     });
-    const myEstimate = builder.buildObject(estimator(jsonFromXml));
+    const myEstimate = builder.buildObject(estimator(req.body));
     res.header('Content-Type', 'text/xml');
     res.status(200).send(myEstimate);    
   } else {
