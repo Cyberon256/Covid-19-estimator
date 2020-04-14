@@ -13,7 +13,7 @@ app.use(express.json());
 //app.use(responseTime());
 
 app.get('/favicon.ico', (req, res) => res.status(204));  // Disable /favicon.ico
-app.get('/', (req, res) => res.status(204));  // Disable /favicon.ico
+app.get('/', (req, res) => res.status(204));  // Disable /
 
 app.use((req, res, next) => {
   const startTime = process.hrtime();
@@ -24,15 +24,15 @@ app.use((req, res, next) => {
       // Convert everything to milliseconds
       let actualTimeDiff = (timeDiff[0] * 1000) + (timeDiff[1] * 1e-6);
       
-      const timeStamp = (startTime[0] * 1e9) + startTime[1];
+      // const timeStamp = (startTime[0] * 1e9) + startTime[1];
 
       fs.access('server.log', (err) => {
         let thisLog;
-
+        
         if (err) {
           // console.log('Server.log does not exist!');
           //Create the file
-          thisLog = timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms';
+          thisLog = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms';
           fs.writeFile('server.log', thisLog, (err) => {
             if (err) {
               console.log(err);
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
           });
         } else {
           //console.log('Server.log exists!');
-          thisLog = lineBreak + timeStamp + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms'; 
+          thisLog = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms'; 
           fs.appendFile('server.log',thisLog, (err) => {
             if (err) {
               console.log(err);

@@ -28,10 +28,11 @@ router.get('/logs', (req, res) => {
   // Read server.log
   fs.readFile('server.log', 'utf8', (err, file) => {
     if (err) {
-      // show the error
+      // console.log(err)
     } else {
       // return contents of the file
       res.type('text/plain;charset=UTF-8');
+      //res.type('text/plain');
       res.status(200).send(file);
     }
   });
