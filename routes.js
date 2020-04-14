@@ -31,7 +31,7 @@ router.get('/logs', (req, res) => {
       // console.log(err)
     } else {
       // return contents of the file
-      res.type('text/plain;charset=UTF-8');
+      res.type('text');
       //res.type('text/plain');
       res.status(200).send(file);
     }
