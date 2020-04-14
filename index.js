@@ -13,6 +13,7 @@ app.use(express.json());
 //app.use(responseTime());
 
 app.get('/favicon.ico', (req, res) => res.status(204));  // Disable /favicon.ico
+app.get('/', (req, res) => res.status(204));  // Disable /favicon.ico
 
 app.use((req, res, next) => {
   const startTime = process.hrtime();
