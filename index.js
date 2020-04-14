@@ -29,7 +29,7 @@ app.use((req, res, next) => {
       fs.access('logs.txt', (err) => {
         if (err) {
           // console.log('logs.txt does not exist!');
-          const createLogs = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms';
+          const createLogs = req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(0) + 'ms';
           fs.writeFile('logs.txt', createLogs, (err) => {
             if (err) {
               console.log(err);
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
           });
         } else {
           //console.log('Server.log exists!');
-          const addToLogs = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(4) + 'ms'; 
+          const addToLogs = lineBreak + req.method + '\t\t' + req.baseUrl + req.path + '\t\t' + res.statusCode + '\t\t' + actualTimeDiff.toFixed(0) + 'ms'; 
           fs.appendFile('logs.txt', addToLogs, (err) => {
           if (err) throw err;
           console.log('Saved!');
